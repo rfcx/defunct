@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="CHAINSAWS ARE HERE!"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/TextView02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lat: " />
+
+            <TextView
+                android:id="@+id/LatTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="coord" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lon: " />
+
+            <TextView
+                android:id="@+id/LonTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="coord" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/playBtt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:text="@string/playrec" />
+    </LinearLayout>
+	<fragment
+		class="com.google.android.gms.maps.SupportMapFragment"
+		android:id="@+id/map"
+		android:layout_width="match_parent"
+		android:layout_height="280dp"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/invalid_audio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:background="#fe0404"
+            android:text="@string/invalid" />
+
+        <Button
+            android:id="@+id/omw_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:background="#299302"
+            android:text="@string/omw" />
+
+        <Button
+            android:id="@+id/omw_need_backup_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:background="#0098fe"
+            android:text="@string/omw_need_backup" />
+    </LinearLayout>
+    
+    
+</LinearLayout>

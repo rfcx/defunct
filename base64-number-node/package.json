@@ -1,0 +1,10 @@
+{
+  "name": "base64-number-node",
+  "version": "0.0.1",
+  "engine": [
+    "node >= v0.6.0"
+  ],
+  "main": "base64.js",
+  "readmeFilename": "README.md",
+  "_id": "base64-number-node@0.0.1"
+}

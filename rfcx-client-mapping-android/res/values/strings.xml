@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">RFCx Tembé</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">RFCx Tembé</string>
+    <string name="login">Login</string>
+    <string name="name">Name</string>
+    <string name="fill">You must fill your name</string>
+
+    <string name="start">Start mapping</string>
+    <string name="stop">Stop mapping</string>
+    <string name="sync">Synchronize</string>
+    <string name="welcome">Welcome %1$s</string>
+    <string name="outofservice">Phone out of service</string>
+    <string name="latlngnotfound">Phone location not found</string>
+
+    <string name="startmapping">Starting cell mapping</string>
+    <string name="stopmapping">Stopping cell mapping</string>
+    <string name="simnull">SIM null</string>
+    <string name="carriernull">Sorry but we could not get the Cellphone Carrier</string>
+
+    <string name="nosignalzone">No signal zone</string>
+
+    <string name="servicestate">Service state: %1$s</string>
+    <string name="signalstrength">Signal strength: %1$s ASU</string>
+    <string name="location">Location: %1$s, %2$s</string>
+    <string name="accuracy">Accuracy: %1$s ±meters</string>
+    <string name="checkinsfound">Checkins found: %1$d</string>
+
+    <string name="loginerror">An error occurr while logging into RFCx</string>
+    <string name="loginin">logging in...</string>
+    <string name="notconnected">not connected to internet...</string>
+
+</resources>

@@ -1,0 +1,274 @@
+#+Title: Forrest Sensors
+#+Options: toc:nil ^:nil
+
+* Overview
+** Hardware
+- sound input
+- GPRS
+- solar panel
+
+** Software
+- [[id:852ecdc0-4273-4000-86f5-69341db0c48c][FFT analysis software]]
+- [[id:d3ed4558-5af2-46a4-b3b1-f95008ad9971][SMS Communication]]
+- periodic communication reports (data format?)
+
+* Tasks [6/8]
+- talk to Taylor about Arduinos
+- cell network integration
+- Arduino -- dev environment, can I get my hands on some
+- microphones
+
+** DONE FFT analysis software
+   :PROPERTIES:
+   :ID:       852ecdc0-4273-4000-86f5-69341db0c48c
+   :END:
+file:fft/fft.ino
+
+*** Links
+- http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1286718155
+- http://arduino.cc/playground/Main/InterfacingWithHardware#arstat
+- http://www.dtic.upf.edu/~jlozano/interfaces/blow_sensor.html
+- http://www.nerdkits.com/videos/sound_meter/
+
+** DONE serial interface
+Set the following terminal characteristics for =/dev/ttyUSB0=.
+#+begin_src sh
+  stty -F /dev/ttyUSB0 cs8 9600 ignbrk -brkint -imaxbel \
+      -opost -onlcr -isig -icanon -iexten \
+      -echo -echoe -echok -echoctl -echoke noflsh -ixon -crtscts
+#+end_src
+
+Then connect to it using GNU screen with.
+#+begin_src sh
+  screen -c /dev/null /dev/ttyUSB0 9600
+#+end_src
+
+For more see http://arduino.cc/playground/Interfacing/LinuxTTY.
+
+** DONE combined serial interface and FFT
+Now printing out all 64 sensed values through the serial computer interface.
+
+** CANCELED Compile with the SMS library
+   - State "CANCELED"   from "TODO"       [2012-06-26 Tue 14:11] \\
+     looks my Duemilanove may have insufficient Serial ports for this sketch
+- [[http://wiki.groundlab.cc/doku.php?id=gsm_arduino_library][Instructions]]
+- [[http://github.com/GROUNDLAB/GSM-ARDUINO.git][Library git repository]]
+
+** DONE SMS Communication
+   :PROPERTIES:
+   :ID:       d3ed4558-5af2-46a4-b3b1-f95008ad9971
+   :END:
+No need for fancy software, we can just send AT commands directly to a
+serial channel with the functionality included in the new arduino
+software.
+
+To turn on and connect to the board do some combination of;
+1. ensure that the Telit GSM module is connected
+2. ensure the SIM card and the antenna are connected to the Telit
+3. plug in the usb cord
+4. connect to a terminal by running
+   : screen -c /dev/null /dev/ttyUSB0 115200,cs8
+5. and then press the =on/off= button on the board some number of
+   times -- the green "stat" light should light up if things are going
+   well (i.e., if the board is ready for commands)
+6. Once you start to see text at the terminal, or at least you are
+   able to type you're good to go and can start using the =AT=
+   commands.  Some good information on commands can be found at the
+   following.
+   - [[http://tronixstuff.wordpress.com/2011/01/19/tutorial-arduino-and-gsm-cellular-part-one/][tutorial-arduino-and-gsm-cellular-part-one]]
+   - http://zitseng.com/tech/gsm-at-commands
+
+** DONE Send an SMS text messages with =AT= commands
+The following sequence works, at the end of the SMS message, send a
+Cntr-Z, which is equal to =0x1A=.
+
+: AT+CMGF=1
+: OK
+: AT+CNMI=0,0,0,0,0
+: OK
+: AT#SMSMODE=0
+: OK
+: AT#BND=3
+: OK
+: AT+CMGS="14154837242"
+: > version 4, not out killing hobos at night anymore
+: +CMGS:  1
+
+** TODO Format for text reports
+see [[http://www.nowsms.com/long-sms-text-messages-and-the-160-character-limit][long-sms-text-messages-and-the-160-character-limit]]
+- Limited to 60 characters
+- characters are 7-bit's long (restricted English and some symbols)
+- 140 Bytes
+- may also send 70 characters of Unicode UCS-2
+
+** TODO direct terminal GSM interface
+The board is http://www.sparkfun.com/products/9311.
+
+According to the sparkfun page it should be possible to connect
+directly from the laptop (and with luck the laptop power supply will
+be sufficient).  Then open up a serial terminal connection, and begin
+sending =AT= commands.  The following should make a serial connection
+using GNU screen (updating the =/dev/tty= for your system).
+: screen -c /dev/null /dev/ttyUSB0 115200
+
+** find a waterproof microphone
+** figure out communication
+* Notes
+** Server-side -- (lets use express.js)
+So, since we're going with node.js to use javascript all the way
+through, I searched around for the recommended node web frameworks.
+
+It looks like [[http://expressjs.com/][express]] and [[http://geddyjs.org/][geddy]] are the main options, and of those I
+think *express* is the way to go mainly because of the comments [[http://stackoverflow.com/questions/3809539/choosing-a-web-application-framework-using-node-js][here]].
+
+Follow the instructions at http://expressjs.com/guide.html to launch a
+trivial express web application.
+
+** Arduino
+[[http://www.youtube.com/watch?v=fCxzA9_kg6s&feature=related][intro tutorial video]]
+
+*** Working Makefile Build
+Using the Makefile tool from [[http://github.com/mjoldfield/Arduino-Makefile.git][Arduino-Makefile.git]].
+
+Added the following to the Makefile
+: BOARD_TAG     = atmega328
+: ARDUINO_PORT  = /dev/ttyUSB0
+: ARDUINO_LIBS  = avr     \
+:                 fft
+: AVRDUDE       = /usr/bin/avrdude
+: AVR_TOOLS_DIR = /usr/share/arduino/hardware/tools/avr
+: AVRDUDE_CONF  = /usr/share/arduino/hardware/tools/avrdude.conf
+
+*** Board Types
+: --            uno: Arduino Uno
+: --      atmega328: Arduino Duemilanove w/ ATmega328
+: --      diecimila: Arduino Diecimila or Duemilanove w/ ATmega168
+: --        nano328: Arduino Nano w/ ATmega328
+: --           nano: Arduino Nano w/ ATmega168
+: --       mega2560: Arduino Mega 2560 or Mega ADK
+: --           mega: Arduino Mega (ATmega1280)
+: --       leonardo: Arduino Leonardo
+: --        mini328: Arduino Mini w/ ATmega328
+: --           mini: Arduino Mini w/ ATmega168
+: --       ethernet: Arduino Ethernet
+: --            fio: Arduino Fio
+: --          bt328: Arduino BT w/ ATmega328
+: --             bt: Arduino BT w/ ATmega168
+: --     lilypad328: LilyPad Arduino w/ ATmega328
+: --        lilypad: LilyPad Arduino w/ ATmega168
+: --       pro5v328: Arduino Pro or Pro Mini (5V, 16 MHz) w/ ATmega328
+: --          pro5v: Arduino Pro or Pro Mini (5V, 16 MHz) w/ ATmega168
+: --         pro328: Arduino Pro or Pro Mini (3.3V, 8 MHz) w/ ATmega328
+: --            pro: Arduino Pro or Pro Mini (3.3V, 8 MHz) w/ ATmega168
+: --      atmega168: Arduino NG or older w/ ATmega168
+: --        atmega8: Arduino NG or older w/ ATmega8
+
+** GSM boards
+*** What we have
+We have a [[http://www.sparkfun.com/products/9311][GE864 Evaluation Board]] and a [[http://www.sparkfun.com/products/281][GM862 Evaluation Board]], in
+either case we will need to add the following.
+- an external power supply of 5 Volts at 2 Amps
+- an external antenna, probably not a little one like [[http://www.sparkfun.com/products/675][this]] because
+  they only work in areas of really good coverage, rather we should
+  look for a bigger antenna like [[http://www.sparkfun.com/products/8724][this]] or some such.  I've seen the
+  "good" antennas described as those with long wires like you would
+  find in a car cell phone antenna.
+
+The GM862 can be purchased as a component in this [[http://www.sparkfun.com/products/280][GM862 Evaluation
+Kit]], which is no longer sold, but which should give an idea of the
+components needed.
+
+*** Another Option
+Could do a [[http://www.open-electronics.org/arduino-gsm-shield/][arduino-gsm-shield]] which shouldn't be too expensive and
+should be *very* easy to connect and use (at least this should be good
+enough for a first prototype).
+
+*** Tutorials
+- [[http://tinkerlog.com/2009/05/15/interfacing-arduino-with-a-telit-gm862/][Interfacing Arduino with a Telit GM862]] which appears to start with a
+  slightly more "bare bones" GMS board
+- [[http://tronixstuff.wordpress.com/2011/01/19/tutorial-arduino-and-gsm-cellular-part-one/][Tutorial: Arduino and GSM Cellular – Part One]], which requires a
+  [[http://littlebirdelectronics.com/products/cellular-shield-with-sm5100b][SM5100B GSM Cellular Shield]], which may be at about the right place
+  for combining easy of use and board complexity.  This board is
+  similar to those we have but without the USB interfaces and with
+  those pins already broken out, so maybe we just pop the USB
+  interface off of what we have and then use one of our existing
+  boards (will require soldering which is above my pay grade).
+
+** SMS text messages
+[[http://en.wikipedia.org/wiki/Short_Message_Service#Technical_details][SMS]] (short message service) text messages are implemented along the
+[[http://en.wikipedia.org/wiki/Short_message_service_technical_realisation_(GSM)][GSM]] recommendations.  Where GSM is the technical implementation upon
+which SMS text messages are based.
+
+It is possible to send these from the command line if you have a
+connection to a "dial-up" phone-line modem.  See [[http://howto.gumph.org/content/send-sms-messages-from-linux/][here]].
+
+** microphones
+Maybe just buy working microphones, like the [[http://robosavvy.com/store/product_info.php/products_id/626][ZX-Sound]], or the very
+similar but reportedly slightly less capable sparkfun [[http://www.sparkfun.com/products/8669][electret]]
+microphone with this dead simple [[http://wiring.org.co/learning/basics/electretmicrophone.html][wiring diagram]].
+
+*** Notes and Tutorials
+- http://interface.khm.de/index.php/lab/experiments/arduino-realtime-audio-processing/
+- http://www.mtasales.com.au/voicetech/lav_min_vt500water.htm
+- http://arduino.cc/playground/Main/InterfacingWithHardware#arstat
+
+** other platforms
+*** Zigbee
+A standard for communication protocols
+
+*** waspmote
+A hardware device
+http://www.libelium.com/products/waspmote
+
+** possible configurations
+- group of waspmotes communicating w/zigbee
+  (needs a base station or something)
+- individual cell or smart phones
+
+* Ideas and Miscellany
+
+** Another related project -- refuge.io
+http://refuge.io/
+
+** A related arduino project under the "Federated Wiki"
+- [[https://github.com/WardCunningham/Smallest-Federated-Wiki][Federated Wiki]]
+- [[https://github.com/WardCunningham/Smallest-Federated-Wiki/tree/master/server/Wikiduino][Wikiduino]]
+
+** shakers
+Is there a way to charge up a battery from shaking, like those fancy
+watches?  If so then the sensors could be powered off all the time,
+and they could have such shaker-chargers which would then;
+1. build up energy when a tree is shaking (e.g., from chainsawing)
+2. turn on
+3. sense
+4. report
+
+** Orangutan Life Alert
+Equip orangutans with a life-alert type pendant, which they could
+activate to text their current GPS coordinates to some external
+monitoring system.  They could then /maybe/ use such a system to call
+for help when something fishy (logging, burning, etc...) is going on.
+
+** Monkey Spies
+Setup a system which is powered off *all* of the time.
+
+This systems has a large button which when pressed
+1. turns it on
+2. it senses
+3. if it detects deforestation activity it then
+   - sends a text message
+   - does something fun for the button presser
+
+Train monkeys to press these buttons when something fishy is going on?
+
+** Text message alerts
+If there are indigenous people, and they are amenable, maybe do a
+[[http://www.wired.com/business/2009/03/africa-awaits-y/][text-eagle]] thing where they send alert texts and get back minutes (or
+much more) if deforestation is occurring.
+
+If they could also send GPS coordinates, and maybe pictures of the
+logging that would also be awesome.
+
+Here's an interesting article about a better way to pay people by
+their phone number for useful reports.
+[[http://newswatch.nationalgeographic.com/2012/07/04/the-invisible-bank-how-kenya-has-beaten-the-world-in-mobile-money/][the-invisible-bank-how-kenya-has-beaten-the-world-in-mobile-money]]
