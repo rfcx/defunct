@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Rainforest Connection</title>
+  <script type="text/javascript">
+    function setLink() {
+      document.getElementById("pdf-link").href =
+        "http://rfcx.github.io/rfcx-pitch/one-pager/pdf/rfcx-one-pager-two-sided.pdf?"+Math.round(Math.random()*100);
+    }
+  </script>
+</head>
+<body onLoad="setLink()">
+
+  <a id="pdf-link" href="">
+    Click here for the latest PDF one pager...
+  </a>
+
+</body>
+</html>
