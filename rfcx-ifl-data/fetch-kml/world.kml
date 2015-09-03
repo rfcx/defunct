@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.1">
+
+<Document>
+<Folder>
+	<name>Title</name>
+	<Style>
+      <ListStyle>
+        <listItemType>radioFolder</listItemType>            
+      </ListStyle>          
+	</Style>
+  <ScreenOverlay>
+    <name>Title</name>
+    <Icon>
+      <href>http://globalmonitoring.sdstate.edu/projects/gfm/ifl/title.png</href>
+    </Icon>
+    <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+    <screenXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+    <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+    <size x="0" y="0" xunits="fraction" yunits="fraction"/>
+  </ScreenOverlay>
+</Folder>
+
+<Folder>
+	<name>Legend</name>
+	<Style>
+      <ListStyle>
+        <listItemType>radioFolder</listItemType>            
+      </ListStyle>          
+	</Style>
+  <ScreenOverlay>
+    <name>Legend</name>
+    <Icon>
+      <href>http://globalmonitoring.sdstate.edu/projects/gfm/ifl/legend.png</href>
+    </Icon>
+    <overlayXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+    <screenXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+    <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+    <size x="0" y="0" xunits="fraction" yunits="fraction"/>
+  </ScreenOverlay>
+</Folder>
+
+<Folder>
+	<name>Map</name>
+<Region>
+	<Lod>
+		<minLodPixels>500</minLodPixels>
+		<maxLodPixels>2000</maxLodPixels>
+		<!--<minFadeExtent></minFadeExtent>-->
+		<!--<maxFadeExtent>3500</maxFadeExtent>-->
+	</Lod>
+	<LatLonAltBox>
+		<north>90</north>
+		<south>-90</south>
+		<east>180</east>
+		<west>-180</west>
+	</LatLonAltBox>
+</Region>
+
+<GroundOverlay>
+	<name>world</name>
+	<drawOrder>0</drawOrder>
+	<Icon>
+		<href>http://globalmonitoring.sdstate.edu/projects/gfm/ifl/world.png</href>
+	</Icon>
+	<LatLonBox>
+		<north>90</north>
+		<south>-90</south>
+		<east>180</east>
+		<west>-180</west>
+	</LatLonBox>
+</GroundOverlay>
+
+<NetworkLink>
+	<name>a</name>
+	<Region>
+	<Lod>
+		<minLodPixels>500</minLodPixels>
+		<maxLodPixels>2000</maxLodPixels>
+		<!--<minFadeExtent></minFadeExtent>-->
+		<!--<maxFadeExtent>3500</maxFadeExtent>-->
+	</Lod>
+	<LatLonAltBox>
+		<north>90</north>
+		<south>0</south>
+		<east>0</east>
+		<west>-180</west>
+	</LatLonAltBox>
+	</Region>
+	<Link>
+		<href>http://globalmonitoring.sdstate.edu/projects/gfm/ifl/a/a.kml</href>
+		<viewRefreshMode>onRegion</viewRefreshMode>
+	</Link>
+</NetworkLink>
+
+<NetworkLink>
+	<name>b</name>
+	<Region>
+	<Lod>
+		<minLodPixels>500</minLodPixels>
+		<maxLodPixels>2000</maxLodPixels>
+		<!--<minFadeExtent></minFadeExtent>-->
+		<!--<maxFadeExtent>3500</maxFadeExtent>-->
+	</Lod>
+	<LatLonAltBox>
+		<north>90</north>
+		<south>0</south>
+		<east>180</east>
+		<west>0</west>
+	</LatLonAltBox>
+	</Region>
+	<Link>
+		<href>http://globalmonitoring.sdstate.edu/projects/gfm/ifl/b/b.kml</href>
+		<viewRefreshMode>onRegion</viewRefreshMode>
+	</Link>
+</NetworkLink>
+
+<NetworkLink>
+	<name>c</name>
+	<Region>
+	<Lod>
+		<minLodPixels>500</minLodPixels>
+		<maxLodPixels>2000</maxLodPixels>
+		<!--<minFadeExtent></minFadeExtent>-->
+		<!--<maxFadeExtent>3500</maxFadeExtent>-->
+	</Lod>
+	<LatLonAltBox>
+		<north>0</north>
+		<south>-90</south>
+		<east>0</east>
+		<west>-180</west>
+	</LatLonAltBox>
+	</Region>
+	<Link>
+		<href>http://globalmonitoring.sdstate.edu/projects/gfm/ifl/c/c.kml</href>
+		<viewRefreshMode>onRegion</viewRefreshMode>
+	</Link>
+</NetworkLink>
+
+<NetworkLink>
+	<name>d</name>
+	<Region>
+	<Lod>
+		<minLodPixels>500</minLodPixels>
+		<maxLodPixels>2000</maxLodPixels>
+		<!--<minFadeExtent></minFadeExtent>-->
+		<!--<maxFadeExtent>3500</maxFadeExtent>-->
+	</Lod>
+	<LatLonAltBox>
+		<north>0</north>
+		<south>-90</south>
+		<east>180</east>
+		<west>0</west>
+	</LatLonAltBox>
+	</Region>
+	<Link>
+		<href>http://globalmonitoring.sdstate.edu/projects/gfm/ifl/d/d.kml</href>
+		<viewRefreshMode>onRegion</viewRefreshMode>
+	</Link>
+</NetworkLink>
+
+</Folder>
+</Document>
+</kml>

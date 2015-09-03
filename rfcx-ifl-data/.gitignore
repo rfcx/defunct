@@ -1,0 +1,10 @@
+.DS_Store
+
+kml-to-geojson/node_modules/*
+data/kml/*
+data/json/*
+
+data/raw/2013-07-world-ifl.csv
+data/raw/2013-07-world-ifl.kml
+data/raw/2013-07-gfw2-forma.csv
+data/raw/2013-07-gfw2-forma.kml
